@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Login</title>
+    <link rel="stylesheet" type="text/css" href="../css/admin.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <!-- BOOTSTRAP -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <!-- Fontawesome-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
+    <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+
+</head>
+<body>
+
+  <div class="modal-dialog text-center">
+        <div class="col-sm-8 main-section">
+            <div class="modal-content">
+                <div class="col-12 user-img">
+                    <img src="../images/admin.png">
+                    <h2>Admin</h2>
+                </div>
+                <form class="col-12">
+                    <div class="form-group" id="user-group">
+                        <input type="text" id="name" class="form-control" placeholder="Unesite username" name="username">
+                    </div>
+                    <div class="form-group" id="contrasena-group">
+                        <input type="password" id="password" class="form-control" placeholder="Unesite password" name="password">
+                    </div>
+                    <button id="loginAdmin" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> Login </button>
+                    <div style="padding-bottom: 20px"></div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+
+<script>
+
+    var ime;
+    var sifra;
+    $( "#loginAdmin" ).click(function() {
+        var ime = $("#name").val();
+        var sifra = $("#password").val();
+        if( $("#username").val() == "" || $("#password").val() == "" ) {
+                  alert("Popunite sva polja!");
+        }
+        else {
+        $.ajax({
+            type: "POST",
+            url: '../public/adminLogin.php',
+            data: {name: ime, password: sifra},
+            dataType: 'json',
+            success: function(data) {
+                if (data.status) {
+                    window.location.href = 'adminDashboard.html?id=' + data.id;
+                }
+                else {
+                  alert(data.message);
+                }
+            },
+        });
+      }
+    })
+</script>
+
+
+</body>
+</html>
