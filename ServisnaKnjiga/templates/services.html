@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Autoservisi</title>
+    <link rel="stylesheet" type="text/css" href="../css/glavna.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <!-- Fontawesome-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
+    <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+</head>
+<body>
+
+<div class="header-top" style="border-bottom: 2px solid #0b3e91">
+    <div id="yes" hidden class="logged" style="padding: 5px">
+        <div style="width: 860px; margin: 0 auto;">
+            <div class="logo">
+                <b><p style="font-size: 25px; color: #fff;float: left; margin: auto">SERVISNA KNJIGA</p></b>
+            </div>
+            <div style="float: right"><p id="ime" style="display: inline-block"><i class="fas fa-user"></i> </p>
+                <button id="logout" class="bttn2">Log Out!</button>
+            </div>
+            <div style="clear: both"></div>
+        </div>
+    </div>
+    <div style="clear: both">
+    </div>
+    <div id="vrh" class="header-bottom">
+        <div class="wrapper" style="border-bottom: none">
+
+            <!--<hr style="border-bottom: 2px solid #0b3e91;">-->
+            <!--<div id="logo"><b><p style="font-size: 25px; color: #0b3e91">SERVISNA KNJIGA</p></b></div>-->
+            <div id="nav" style="margin: 0 auto">
+                <ul>
+                    <li><a href="index.html">Pocetna</a></li>
+                    <li><a href="profile.html" id="profil">Moj Profil</a></li>
+                    <li><a href="how-working.html">Kako funkcionise?</a></li>
+                    <li><a href="services.html">Autoservisi</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="background: url(../images/parallax-transparent.jpg)">
+
+    <h2 style="text-align: center; color: #13619f; padding-top: 15px; margin: 0">Autoservisi:</h2>
+    <div class="wrapper" style="padding: 20px;">
+        <div  id="service">
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<hr style="border-bottom: 2px solid #0b3e91; margin-top: 5px">
+
+<div id="footer" class="footer-down" style="border-bottom: 2px solid #0b3e91">
+
+    <p style="text-align: center; font-size: 18px">All rigths reserved &copy; Stef</p>
+
+</div>
+
+
+</body>
+
+<script>
+
+    var url = $(location).attr('href');
+    parts = url.split("=");
+    last_part = parts[parts.length-1];
+
+    $( document ).ready(function(){
+        $.ajax({
+            type: "POST",
+            url: '../public/checkSession.php',
+            data: { id: last_part },
+            dataType: 'json',
+            success: function(data) {
+                if(data.status)
+                {
+                    $("#yes").show();
+                    $("#ime").append(data.name);
+
+                    window.onscroll = function() {myFunction()};
+
+                    // hvata navbar
+                    var header = document.getElementById("vrh");
+                    console.log(header);
+
+                    // pomak tj dobinjaje odnosno pomeranje navbara
+                    var sticky = header.offsetTop;
+                    console.log(sticky);
+
+                    // dodavanje klase sticky kada dodjemo misem na navbar i uklanjanje kada odemo s navbara
+                    function myFunction() {
+                        if (window.pageYOffset >= sticky) {
+                            header.classList.add("sticky")
+                        } else {
+                            header.classList.remove("sticky");
+                        }
+                    }
+
+                    window.history.pushState(null, null, "?id=" + data.id);
+
+                }
+            },
+        });
+    });
+
+
+    $( document ).ready(function(){
+        $.ajax({
+            type: "POST",
+            url: '../public/showServices.php',
+            data: {},
+            dataType: 'json',
+            success: function(data) {
+                $.each(data, function() {
+
+                    $("#service").append('<div style="border-radius: 15px; border-top: 3px solid #13619f; display: flex; ' +
+                        'justify-content: space-around ; background: rgba(255, 255, 255, 0.5); width: 840px; padding: 10px; margin: 25px auto")>' +
+                        '<img src="../images/servis.jpg" alt="avatar" style="margin: 10px 0 0 20px"><div style="vertical-align: auto; margin: auto">' +
+                        '<p style="font-size: 24px">Autoservis: ' +
+                        this.name + '</p><br><p style="font-size: 14px">Adresa: ' + this.address + '</p></div></div>')
+                })
+            },
+        });
+    });
+
+    $("#logout").click( function (){
+        $.ajax({
+            type: "POST",
+            url: '../public/logout.php',
+            data: { },
+            dataType: 'json',
+            success: function(data) {
+                if(data.status)
+                {
+                    window.location.href = "index.html";
+                }
+                else
+                {
+                    alert('GRESKA');
+                }
+            },
+        });
+    });
+</script>
+</html>
