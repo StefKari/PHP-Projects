@@ -1,0 +1,370 @@
+
+*{
+   margin:0;
+   padding:0;
+}
+body {
+    margin:0;
+    padding:0;
+    font-size:14px;
+    font-family: 'Roboto', Arial, sans-serif;
+    color:#0b3e91;
+    font-size: 1em;
+
+
+}
+h1, h2, h3, h4, h5, h6 {
+    font-weight:900;
+    margin:1em 0 0.5em;
+    color:#0b3e91;
+}
+
+h1 { font-size:3em;}
+h2 { font-size:2.2em;}
+h3 { font-size:2em;}
+h4 { font-size:1.6em;}
+h5 { font-size:1.4em;}
+h6 { font-size:1.2em;}
+
+p {
+    margin:0.3em 0 0.5em;
+}
+img {
+    vertical-align:bottom;
+    max-width:100%;
+}
+
+
+a:link,
+a:visited {
+    text-decoration:none;
+    color:#0b3e91;
+    font-size: 17px;
+}
+
+a:hover {
+    color:#fff;
+}
+a:active {
+    color:#696969;
+}
+
+
+.header-top {
+
+    width: 100%;
+    background: #fff;
+}
+
+.header-bottom {
+
+    width: 100%;
+    background: #fff;
+    clear: both;
+}
+
+/* The sticky class is added to the header with JS when it reaches its scroll position */
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    clear: both;
+}
+
+/* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) */
+.sticky + .content {
+    padding-top: 90px;
+}
+
+.wrapper {
+    width: 860px;
+    margin: 0px auto;
+    display: flex;
+    justify-content: space-between;
+    clear: both;
+}
+
+#header img {
+    width: 80px;
+    height: 50px;
+
+
+}
+
+#nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+#nav ul li {
+    display: inline-block;
+    padding: 0 5px;
+
+}
+
+#nav ul li a {
+    display: inline-block;
+    height: 25px;
+    padding: 8px 25px;
+    vertical-align: auto;
+    border-radius: 7px;
+    border-bottom: 3px solid #fff;
+
+}
+
+#nav ul li a:hover {
+    background: #5897fb;
+    border-bottom: 3px solid #13619f;
+
+}
+
+#hero {
+    background: url(../Images/servisna_knjiga.jpg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+    padding: 130px 10px;
+    margin-bottom: 0px;
+}
+
+.content1 {
+    text-align: center;
+    border-radius: 25px;
+    margin: 0 auto;
+    background: rgba(19, 97, 159, 0.6);
+    color: #fff;
+    padding: 5px;
+}
+
+.content1 h2{
+    color: #fff;
+}
+
+
+#content2 {
+    color: #fff;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.bttn {
+    border: 2px solid #fff;
+    padding: 10px;
+    border-radius: 3px;
+    color: #fff;
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-decoration: none;
+    margin-top: 10px;
+}
+
+.bttn1 {
+    border: 2px solid #f00;
+    padding: 10px;
+    border-radius: 3px;
+    color: #000;
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-decoration: none;
+}
+
+.main {
+    text-align: center;
+    display: block;
+    margin-bottom: 20px;
+
+}
+
+#products {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.product {
+    flex-basis: 175px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    background: #fff;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+#central {
+    background: url(../Images/about.jpg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+    padding: 30px;
+
+}
+
+#c1 {
+    width: 450px;
+    background: rgba(0,0,0,0.46);
+    margin: 30px 0;
+    color: #fff;
+    padding: 10px;
+
+}
+
+
+
+.partner {
+    height: 50px;
+    padding: 40px 40px 10px 40px;
+    background: #CCC;
+
+}
+
+#bottom {
+    padding: 30px 0;
+}
+
+#footer {
+    text-align: center;
+    background: #fff;
+    color: #0b3e91;
+}
+.footer-image {
+    background: url(../images/servisna_knjiga.jpg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+    height: 200px;
+}
+
+.signup {
+    padding: 10px;
+}
+
+
+.logged {
+    background-color: #2371b7;
+    padding: 10px;
+}
+
+.logged p {
+    color: #ffffff;
+}
+
+
+
+.bttn2 {
+
+    text-transform:uppercase;
+    font-size:12px;
+    color:#fff;
+    text-decoration:none;
+    font-weight:bold;
+    display:inline-block;
+    vertical-align:middle;
+    vertical-align:auto;
+    zoom:1;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    border:1px solid #13619f;
+    background: #2188ff;
+    padding:5px 10px;
+
+}
+
+.bttn2:active {
+    border-color: #083559;
+
+}
+
+
+input {
+    border:1px solid #aaa;
+    border-radius:4px;
+    /*margin:1px 0;*/
+    outline:none;
+    padding:6px;
+    box-sizing:border-box;
+    transition:.3s;
+}
+
+input:focus{
+    border-color:dodgerBlue;
+    box-shadow:0 0 8px 0 dodgerBlue;
+}
+
+ * ----------------------------------------
+ * animation slide-right
+ * ----------------------------------------
+ */
+@-webkit-keyframes slide-right {
+    0% {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+    }
+    100% {
+        -webkit-transform: translateX(100px);
+        transform: translateX(100px);
+    }
+}
+@keyframes slide-right {
+    0% {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+    }
+    100% {
+        -webkit-transform: translateX(100px);
+        transform: translateX(100px);
+    }
+}
+
+.slide-right {
+    position: relative;
+    left: -50px;
+    animation: slide-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+/* ----------------------------------------------
+ * Generated by Animista on 2019-7-1 16:22:25
+ * w: http://animista.net, t: @cssanimista
+ * ---------------------------------------------- */
+
+/**
+ * ----------------------------------------
+ * animation slide-left
+ * ----------------------------------------
+ */
+@-webkit-keyframes slide-left {
+    0% {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+    }
+    100% {
+        -webkit-transform: translateX(-100px);
+        transform: translateX(-100px);
+    }
+}
+@keyframes slide-left {
+    0% {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+    }
+    100% {
+        -webkit-transform: translateX(-100px);
+        transform: translateX(-100px);
+    }
+}
+
+
+.slide-left {
+    position: relative;
+    right: -70px;
+    -webkit-animation: slide-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    animation: slide-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
