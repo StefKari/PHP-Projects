@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../css/admin.css">
+    <title>Add Service</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <!-- Fontawesome-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
+    <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+</head>
+<body>
+
+<div  class="admin">
+
+    <p>Unesite servis:</p><input type="text" name="name" id="name"><br><br>
+    <p>Unesite adresu:</p><input type="text" name="address" id="address"><br>
+
+    <button id="save">Sacuvaj!</button>
+
+    <br><br>
+
+    <a href='index.html'>Pocetna <i class="far fa-hand-point-right"></i></a><br><br>
+    <a href='adminDashboard.html'>Admin Dashboard <i class="fas fa-sign-in-alt"></i></a>
+
+</div>
+
+</body>
+
+<script>
+
+    var url = $(location).attr('href');
+    parts = url.split("=");
+    last_part = parts[parts.length-1];
+
+    $( document ).ready(function(){
+        $.ajax({
+            type: "POST",
+            url: '../public/checkAdminSession.php',
+            data: { id: last_part },
+            dataType: 'json',
+            success: function(data) {
+                if(!data.status)
+                {
+                    window.location.href = 'adminLogin.html';
+                }
+            },
+        });
+    });
+
+    $( "#save" ).click(function() {
+        var ime = $("#name").val();
+        var adresa = $("#address").val();
+        $.ajax({
+            type: "POST",
+            url: '../public/serviceAdd.php',
+            data: {name: ime, address: adresa},
+            dataType: 'json',
+            success: function(data) {
+                if (data.status) {
+                    alert("Uspesno unet servis!");
+                }
+                else {
+                    alert(data.status)
+                }
+            },
+        });
+    })
+</script>
+</html>
