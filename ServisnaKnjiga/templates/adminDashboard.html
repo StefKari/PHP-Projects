@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="../css/admin.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <!-- Fontawesome-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
+    <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+    <style type="text/css">
+        a {
+            text-decoration: none;
+            color: #1a2f8f;
+        }
+        table {
+            width: 300px;
+            background: #ccc;
+            margin: 50px auto;
+        }
+        table, th, td {
+            border-collapse: collapse;
+            border: 1px solid #000;
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
+
+</head>
+<body>
+
+    <table>
+        <th>Wellcome Admin</th>
+        <tr><td><a href='serviceAdd.html'>Dodajte servis <i class="far fa-hand-point-right"></i></a></td></tr>
+        <tr><td><a href='manufacturerAdd.html'>Dodajte proizvodjaca <i class="far fa-hand-point-right"></i></a></td></tr>
+        <tr><td><a href='modelAdd.html'>Dodajte model <i class="far fa-hand-point-right"></i></a></td></tr>
+        <tr><td><a href='showUsers.html'>Korisnici <i class="far fa-hand-point-right"></i></a></td></tr>
+        <tr><td><a href='index.html'>Pocetna <i class="far fa-hand-point-right"></i></td></tr>
+        <tr><td rowspan="4"><a href='adminLogin.html'>Logout <i class="fas fa-sign-in-alt"></i></a></td></tr>
+        <!-- "U will be redirected to the main page in 2 seconds!!!"-->
+    </table>
+
+</body>
+
+<script>
+    var url = $(location).attr('href');
+    parts = url.split("=");
+    last_part = parts[parts.length-1];
+
+    $( document ).ready(function(){
+        $.ajax({
+            type: "POST",
+            url: '../public/checkAdminSession.php',
+            data: { id: last_part },
+            dataType: 'json',
+            success: function(data) {
+                if(!data.status)
+                {
+                    window.location.href = 'adminLogin.html';
+                }
+            },
+        });
+    });
+
+    $("#logout").click( function (){
+        $.ajax({
+            type: "POST",
+            url: '../public/logout.php',
+            data: { },
+            dataType: 'json',
+            success: function(data) {
+                if(data.status)
+                {
+                    window.location.href = "adminLogin.html";
+                }
+                else
+                {
+                    alert('Greska');
+                }
+            },
+        });
+    });
+</script>
+</html>
