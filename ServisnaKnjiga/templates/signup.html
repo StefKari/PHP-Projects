@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../css/glavna.css">
+    <title>Sign Up</title>
+    <link rel="stylesheet" type="text/css" href="../style/glavna.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <style type="text/css">
+        a {
+            text-decoration: none;
+            color: #1a2f8f;
+        }
+        table {
+            width: 300px;
+            background: #2371b7;
+            color: #fff;
+            margin: 50px auto;
+        }
+        table, th, td {
+            border-collapse: collapse;
+            border: none;
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div id="vrh" class="header-bottom" style="border-bottom: 2px solid #0b3e91">
+    <div class="wrapper">
+        <div id="logo"><b><p style="font-size: 25px; color: #0b3e91">SERVISNA KNJIGA</p></b></div>
+        <div id="nav" style="margin: 0 auto">
+            <ul>
+                <li><a href="index.html">Pocetna</a></li>
+                <li><a href="login.html">Moj Profil</a></li>
+                <li><a href="how-working.html">Kako funkcionise?</a></li>
+                <li><a href="services.html">Autoservisi</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div style="background: url(../images/parallax-transparent.jpg); height: 700px;">
+    <div class="wrapper" >
+        <div class="signup" style="padding: 20px; margin: 0 auto;">
+
+            <h2 style="text-align: center;">Registruj se:</h2>
+
+            <table>
+                <tr>
+                    <td>Unesite korisnicko ime:</td>
+                    <td ><input type="text" name="username" id="username"></td>
+                </tr>
+                <tr>
+                    <td>Unesite sifru:</td>
+                    <td><input type="password" name="password" id="password"></td>
+                </tr>
+                <tr>
+                    <td>Ponovite sifru:</td>
+                    <td><input type="password" id="kontrola"></td>
+                </tr>
+                <tr>
+                    <td>Unesite email:</td>
+                    <td><input type="email" name="email" id="email"></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><button id="signup" class="bttn2">Sign Up</button></td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+<hr style="border-bottom: 2px solid #0b3e91; margin-top: 5px">
+
+<div id="footer">
+
+    <p style="text-align: center; font-size: 18px">All rigths reserved &copy; Stef</p>
+
+</div>
+
+</body>
+
+<script>
+
+    $( document ).ready(function(){
+        $.ajax({
+            type: "POST",
+            url: '../public/checkSession.php',
+            data: { },
+            dataType: 'json',
+            success: function(data) {
+                if(data.status)
+                {
+                    window.location.href = 'profile.html';
+                }
+            },
+        });
+    });
+
+    var ime;
+    var sifra;
+    var email;
+    console.log(ime);
+    $( "#signup" ).click(function() {
+        var ime = $("#username").val();
+        var sifra = $("#password").val();
+        var kontrola = $("#kontrola").val();
+        var email = $("#email").val();
+
+        if($("#password").val() !== $("#kontrola").val()) {
+          alert("Lozinke moraju biti iste");
+        }
+        else if($("#username").val() == "" || $("#password").val() == "" || $("#email").val() == "" ) {
+            alert("Popunite sva polja!");
+        }
+        else {
+        console.log(ime);
+        $.ajax({
+            type: "POST",
+            url: '../public/signup.php',
+            data: {username: ime, password: sifra, email: email},
+            dataType: 'json',
+            success: function(data) {
+                if (data.status) {
+                    alert(data.id);
+                    window.location.href = 'index.html';
+                } else {
+                    $("#username").val("");
+                    $("#username").attr("placeholder", "Username je zauzet");
+                }
+            },
+        });
+      }
+    })
+
+</script>
+</html>
