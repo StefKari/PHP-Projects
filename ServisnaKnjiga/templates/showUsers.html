@@ -74,26 +74,6 @@
     });
 
 
-       var ime;
-    $( "#save" ).click(function() {
-        var ime = $("#name").val();
-        var proizvodjac = $("#manufacurer").val();
-        console.log(proizvodjac);
-        $.ajax({
-            type: "POST",
-            url: '../public/modelAdd.php',
-            data: {name: ime, manufactor_id: proizvodjac},
-            dataType: 'json',
-            success: function(data) {
-                if (data.status) {
-                    alert("Uspesno ste uneli model!");
-                }
-                else {
-                    alert(data.status)
-                }
-            },
-        });
-    })
 
 </script>
 </html>
