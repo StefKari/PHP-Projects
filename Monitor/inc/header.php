@@ -100,8 +100,8 @@ $format = new Format();
             </div>
             <div class="searchbtn clear">
               <form action="search.php" method="get">
-                <input type="text" name="search" placeholder="Search..."/>
-                <input type="submit" name="submit" value="Search"/>
+                <input type="text" name="search" placeholder="Search...">
+                <input type="submit" name="submit" value="Search">
               </form>
             </div>
           </div>
