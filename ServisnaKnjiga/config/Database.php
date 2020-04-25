@@ -1,7 +1,6 @@
 <?php
 
-class Database
-{
+class Database {
     // parametri
     private $host="localhost";
     private $username="root";
