@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../css/glavna.css">
+    <title>Pocetna</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <!-- Fontawesome-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
+    <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+
+</head>
+<body>
+
+<div class="header-top" style="vertical-align: auto">
+    <div id="no" hidden class="logged" style="padding: 5px">
+        <div style="width: 860px; margin: 0 auto; padding-top: 5px;">
+            <div class="logo">
+                <b><p style="font-size: 25px; color: #fff; float: left; margin: auto">SERVISNA KNJIGA</p></b>
+            </div>
+            <div style="float: right; color: #fff">
+                Korisnicko ime: <input type="text" name="username" id="username">
+                Sifra: <input type="password" name="password" id="password">
+                <button id="login" class="bttn2">Log In!</button>
+            </div>
+            <div style="clear: both"></div>
+        </div>
+    </div>
+    <div id="yes" hidden class="logged" style="padding: 5px">
+        <div style="width: 860px; margin: 0 auto;">
+            <div class="logo">
+                <b><p style="font-size: 25px; color: #fff;float: left; margin: auto">SERVISNA KNJIGA</p></b>
+            </div>
+            <div style="float: right"><p id="ime" style="display: inline-block"><i class="fas fa-user"></i>  </p>
+                <button id="logout" class="bttn2">Log Out!</button>
+            </div>
+            <div style="clear: both"></div>
+        </div>
+    </div>
+    <div style="clear: both">
+    </div>
+</div>
+<hr style="border-bottom: 2px solid #0b3e91;">
+<div id="vrh" class="header-bottom">
+    <div class="wrapper">
+
+            <!--<hr style="border-bottom: 2px solid #0b3e91;">-->
+            <!--<div id="logo"><b><p style="font-size: 25px; color: #0b3e91">SERVISNA KNJIGA</p></b></div>-->
+            <div id="nav" style="margin: 0 auto">
+                <ul>
+                    <li><a href="index.html">Pocetna</a></li>
+                    <li><a href="profile.html" id="profil">Moj Profil</a></li>
+                    <li><a href="how-working.html">Kako funkcionise?</a></li>
+                    <li><a href="services.html">Autoservisi</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+<hr style="border-bottom: 2px solid #0b3e91;">
+<div id="hero">
+    <div class="wrapper">
+        <div class="content1" style="border-radius: 15px; border-top: 3px solid #fff">
+            <h2>Nemate servisnu knjigu?</h2>
+            <p style="font-size: 16px">Mozete je besplatno otvoriti</p>
+            <p><a href="signup.html" class="bttn" style="color: #fff">Registruj se!</a></p>
+        </div>
+    </div>
+
+
+</div>
+<hr style="border-bottom: 2px solid #0b3e91;">
+<div>
+    <div class="main" style="padding-top: 15px">
+        <h2 style="margin-top: 0">Istorija servisiranja Vaseg vozila, dostupna uvek kada zatreba.</h2>
+    </div>
+    <div style="border-radius: 10px; background: #13619f; color: #fff; padding: 10px; margin: 0px auto; width: 270px;
+    font-size: 16px; text-align: center">
+        <a href="how-working.html"><p style="color: #fff">Kako funkcionise Servisna Knjiga?</p></a>
+    </div>
+
+</div>
+<br>
+<hr style="border-bottom: 2px solid #0b3e91;">
+
+<div id="footer">
+  <div class="footer-image">
+
+  </div>
+    <hr style="border-bottom: 2px solid #0b3e91;">
+    <p style="font-size: 18px;">Copyright &copy; Stef. All Rights Reserved.</p>
+
+</div>
+
+
+<script>
+    var url = $(location).attr('href');
+    parts = url.split("=");
+    last_part = parts[parts.length-1];
+
+    $( document ).ready(function() {
+        $.ajax({
+            type: "POST",
+            url: '../public/checkSession.php',
+            data: { id: last_part },
+            dataType: 'json',
+            success: function(data) {
+                if(!data.status) {
+                    $("#no").show();
+                    window.onscroll = function() {myFunction()};
+                    // hvata navbar
+                    var header = document.getElementById("vrh");
+                    console.log(header);
+
+                    // pomak tj dobinjaje odnosno pomeranje navbara
+                    var sticky = header.offsetTop;
+                    console.log(sticky);
+
+                    var rect = header.getBoundingClientRect();
+                    console.log(rect.top, rect.right, rect.bottom, rect.left);
+
+                    // dodavanje klase sticky kada dodjemo misem na navbar i uklanjanje kada odemo s navbara
+                    function myFunction() {
+                        if (window.pageYOffset >= sticky) {
+                            header.classList.add("sticky")
+                        } else {
+                            header.classList.remove("sticky");
+                        }
+                    }
+                } else {
+
+                    $("#yes").show();
+                    $("#ime").append(data.name);
+                    window.onscroll = function() {myFunction()};
+
+                    // hvata navbar
+                    var header = document.getElementById("vrh");
+                    console.log(header);
+
+                    // pomak tj dobinjaje odnosno pomeranje navbara
+                    var sticky = header.offsetTop;
+                    console.log(sticky);
+
+                    // dodavanje klase sticky kada dodjemo misem na navbar i uklanjanje kada odemo s navbara
+                    function myFunction() {
+                        if (window.pageYOffset >= sticky) {
+                            header.classList.add("sticky")
+                        } else {
+                            header.classList.remove("sticky");
+                        }
+                    }
+                    window.history.pushState(null, null, "?id=" + data.id);
+                }
+            },
+        });
+    });
+
+    $("#logout").click(function (){
+        $.ajax({
+            type: "POST",
+            url: '../public/logout.php',
+            data: { },
+            dataType: 'json',
+            success: function(data) {
+                if(data.status) {
+                    window.location.href = "index.html";
+                }
+                else {
+                    alert('Greska');
+                }
+            },
+        });
+    });
+
+    var ime;
+    var sifra;
+    console.log(ime);
+    $("#login").click( function () {
+        var ime = $("#username").val();
+        var sifra = $("#password").val();
+        if( $("#username").val() == "" || $("#password").val() == "" ) {
+                  alert("Popunite sva polja!");
+        }
+        else {
+        console.log(ime);
+        $.ajax({
+            type: "POST",
+            url: '../public/login.php',
+            data: {username: ime, password: sifra},
+            dataType: 'json',
+            success: function(data) {
+                if (data.status) {
+                    window.location.href = "index.html";
+                }
+                else {
+                  alert(data.message);
+                }
+            },
+        });
+      }
+    });
+
+
+</script>
+</html>

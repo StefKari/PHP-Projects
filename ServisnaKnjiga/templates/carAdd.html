@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../css/glavna.css">
+    <title>Add Car</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <!-- Fontawesome-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
+    <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+</head>
+<body>
+
+
+<div id="first"></div>
+
+<div class="header" style="border-bottom: 2px solid #0b3e91">
+    <div id="yes" hidden class="logged" style="padding: 5px">
+        <div style="width: 860px; margin: 0 auto;">
+            <div style="float: right"><p id="ime" style="display: inline-block"><i class="fas fa-user"></i> </p>
+                <button id="logout" class="bttn2">Log Out!</button>
+            </div>
+            <div style="clear: both"></div>
+        </div>
+    </div>
+    <div style="clear: both">
+    </div>
+    <div class="wrapper">
+        <div id="logo"><b><p style="font-size: 25px; color: #0b3e91">SERVISNA KNJIGA</p></b></div>
+        <div id="nav">
+            <ul>
+                <li><a href="index.html">Pocetna</a></li>
+                <li><a href="profile.html">Moj Profil</a></li>
+                <li><a href="how-working.html">Kako funkcionise?</a></li>
+                <li><a href="services.html">Autoservisi</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div style="background: url(../images/parallax-transparent.jpg); height:650px;">
+  <div style="width: 860px; margin: 0 auto 0 auto; padding: 25px">
+
+    <table style="margin: 30px auto 0">
+        <tr>
+            <td>Odaberite proizvodjaca: </td>
+            <td><select name="manufacturer" id="manufacturer" class="select-manufactor">
+                <option id="pro" value="0">Odabetite proizvodjaca</option></select><br></td>
+        </tr>
+        <tr>
+            <td>Odaberite model: </td>
+            <td><select name="model" id="model" class="select-model">
+                <option id="mo" value="0">Odaberite model</option>
+            </select></td>
+        </tr>
+        <tr>
+            <td>Unesite broj sasije: </td>
+            <td><input type="text" name="broj_sasije" id="broj_sasije"></td>
+        </tr>
+        <tr>
+            <td>Unesite registarske oznake: </td>
+            <td><input type="text" name="registarska_oznaks" id="registarska_oznaka"></td>
+        </tr>
+        <tr>
+            <td>Unesite snagu motora: </td>
+            <td><input type="text" name="snaga_motora" id="snaga_motora"></td>
+        </tr>
+        <tr>
+            <td>Unesite kubikazu: </td>
+            <td><input type="text" name="kubikaza" id="kubikaza"></td>
+        </tr>
+        <tr>
+            <td>Unesite godinu proizvodnje: </td>
+            <td><input type="text" name="godina_proizvodnje" id="godina_proizvodnje"></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align: center"><button id="save" class="bttn2">Sacuvaj!</button></td>
+        </tr>
+    </table>
+
+  </div>
+</div>
+
+<hr style="border-bottom: 2px solid #0b3e91; margin-top: 5px">
+
+<div id="footer">
+
+    <p style="text-align: center; font-size: 18px">Copyright &copy; Stef. All Rights Reserved.</p>
+
+</div>
+
+
+</body>
+
+<script>
+
+    var url = $(location).attr('href');
+    parts = url.split("=");
+    last_part = parts[parts.length-1];
+
+
+    $(document).ready(function() {
+        $.ajax({
+            type: "POST",
+            url: '../public/showManufacturers.php',
+            data: {},
+            dataType: 'json',
+            success: function(data) {
+                $.each(data, function() {
+                    $("#manufacturer").append('<option value="' + this.id + '">' + this.name + '</option>')
+                })
+            },
+        });
+    });
+
+    $(document).ready(function(){
+        $.ajax({
+            type: "POST",
+            url: '../public/showModels.php',
+            data: {},
+            dataType: 'json',
+            success: function(data) {
+                $.each(data, function() {
+                    $("#model").append('<option value="' + this.id + '">' + this.name + '</option>')
+                })
+            },
+        });
+    });
+
+    var ime;
+    $("#save").click(function() {
+        var model = $("#model").val();
+        var proizvodjac = $("#manufacturer").val();
+        var brojSasije = $("#broj_sasije").val();
+        var registarskaOznaka = $("#registarska_oznaka").val();
+        var snagaMotora = $("#snaga_motora").val();
+        var kubikaza = $("#kubikaza").val();
+        var godinaProizvodnje = $("#godina_proizvodnje").val();
+        var vlasnik = last_part;
+        $.ajax({
+            type: "POST",
+            url: '../public/carAdd.php',
+            data: {model_id: model, manufactor_id: proizvodjac, broj_sasije: brojSasije, registarska_oznaka: registarskaOznaka,
+            snaga_motora: snagaMotora, kubikaza: kubikaza, godina_proizvodnje: godinaProizvodnje, users_id: vlasnik},
+            dataType: 'json',
+            success: function(data) {
+                console.log(data);
+                if (data.status) {
+                    alert("Uspesno ste uneli auto!!!");
+                    window.location.href = "index.html?id=" + data.id;
+                }
+                else {
+                    alert(data.status)
+                }
+            },
+        });
+    });
+
+
+    $(document).ready(function(){
+        $.ajax({
+            type: "POST",
+            url: '../public/checkSession.php',
+            data: { id: last_part },
+            dataType: 'json',
+            success: function(data) {
+                if(!data.status) {
+                    window.location.href = 'login.html';
+                } else {
+                    $("#yes").show();
+                    $("#ime").append(data.name);
+                    window.history.pushState(null, null, "?id=" + data.id);
+                }
+            },
+        });
+    });
+
+    $("#first").on("click", '#logout', function (){
+        $.ajax({
+            type: "POST",
+            url: '../public/logout.php',
+            data: { },
+            dataType: 'json',
+            success: function(data) {
+                if(data.status) {
+                    window.location.href = "index.html";
+                }
+                else {
+                    alert('GRESKA');
+                }
+            },
+        });
+    });
+
+    $(document).ready(function() {
+        $('.select-manufactor').select2().on('select2:select', function (e) {
+            var data = e.params.data;
+            $("#manufacturer option[value='0']").remove();
+
+
+            $.ajax({
+                    type: "POST",
+                    url: '../public/showModelByManufactor.php',
+                    data: {manufactor_id: data.id},
+                    dataType: 'json',
+                    success: function(data) {
+                        $("#model").children().remove().end();
+                        $.each(data, function() {
+                            $("#model").append('<option value="' + this.id + '">' + this.name + '</option>')
+                        })
+                    },
+                });
+
+        });
+    });
+
+    $(document).ready(function() {
+        $('.select-model').select2().on('select2:select', function (e) {
+            var data = e.params.data;
+        })
+    });
+</script>
+
+</html>
