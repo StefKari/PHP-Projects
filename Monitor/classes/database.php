@@ -1,9 +1,9 @@
 <?php
-Class Database {
+class Database {
 
-	public $host   = DB_HOST;
-	public $user   = DB_USER;
-	public $pass   = DB_PASS;
+	public $host = DB_HOST;
+	public $username = DB_USERNAME;
+	public $password = DB_PASSWORD;
 	public $dbname = DB_NAME;
 
 	public $link;
@@ -16,7 +16,7 @@ Class Database {
 
 		// funkcija za konekciju na bazu
 	private function connectDB() {
-		$this->link = new mysqli($this->host, $this->user, $this->pass, $this->dbname);
+		$this->link = new mysqli($this->host, $this->username, $this->password, $this->dbname);
 		if(!$this->link) {
 			$this->error ="Connection fail".$this->link->connect_error;
 			return false;
