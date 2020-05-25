@@ -1,7 +1,7 @@
 <?php
 define("DB_HOST","localhost");
-define("DB_USER","root");
-define("DB_PASS","");
+define("DB_USERNAME","root");
+define("DB_PASSWORD","");
 define("DB_NAME","monitor");
 define("TITLE","Monitor - Udruzenje gradjana");
 ?>
